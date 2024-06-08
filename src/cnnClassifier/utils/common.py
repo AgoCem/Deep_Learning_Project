@@ -14,7 +14,8 @@ import base64
 
 @ensure_annotations
 def read_yaml(path_to_yaml: Path) -> ConfigBox: #the ConfigBox is useful to call in an easier and more direct
-                                                # way the dictionaries
+                                                # way the dictionaries and here i tell him read
+                                                # everything as a ConfigBox
     """reads yaml file and returns
 
     Args:
@@ -39,7 +40,7 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox: #the ConfigBox is useful to call
     
 
 
-@ensure_annotations
+@ensure_annotations #a decorator from the ensure module and here i want him to be sure that the annotation i'm giving are respected such as list type and so on
 def create_directories(path_to_directories: list, verbose=True):
     """create list of directories
 
