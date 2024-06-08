@@ -124,6 +124,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+Chicken-fecal-images/
 env/
 venv/
 ENV/
