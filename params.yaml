@@ -2,7 +2,7 @@ AUGMENTATION: True
 IMAGE_SIZE: [224,224,3] # needed in VGG 16 model
 BATCH_SIZE: 16
 INCLUDE_TOP: False
-EPOCHS: 1 #we need to find the best number, 1 is only for an exemple purpose
+EPOCHS: 10 #we need to find the best number, 1 is only for an exemple purpose
 CLASSES: 2 # the number of classes, here we have healty and disease
 WEIGHTS: imagenet
 LEARNING_RATE: 0.01
