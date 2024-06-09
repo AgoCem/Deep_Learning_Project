@@ -126,6 +126,7 @@ celerybeat.pid
 .venv
 Chicken-fecal-images/
 artifacts/
+chicken_env/
 env/
 venv/
 ENV/
