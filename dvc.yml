@@ -1,0 +1,58 @@
+stages: # the dvc is based on yaml structure and allow us to properly control the pipeline
+  data_ingestion:
+    cmd: python src/cnnClassifier/pipeline/stage_01_data_ingestion.py #this is the command line
+    deps: #this indicates the dependencies of the command
+      - src/cnnClassifier/pipeline/stage_01_data_ingestion.py
+      - config/config.yaml
+    outs: #this indicates the outputs
+      - artifacts/data_ingestion/Chicken-fecal-images
+
+
+  prepare_base_model:
+    cmd: python src/cnnClassifier/pipeline/stage_02_prepare_base_model.py
+    deps:
+      - src/cnnClassifier/pipeline/stage_02_prepare_base_model.py
+      - config/config.yaml
+    params: #this indicates the parameters needed in this stage
+      - IMAGE_SIZE
+      - INCLUDE_TOP
+      - CLASSES
+      - WEIGHTS
+      - LEARNING_RATE
+    outs:
+      - artifacts/prepare_base_model
+
+
+
+  training:
+    cmd: python src/cnnClassifier/pipeline/stage_03_training.py
+    deps:
+      - src/cnnClassifier/pipeline/stage_03_training.py
+      - src/cnnClassifier/components/prepare_callbacks.py
+      - config/config.yaml
+      - artifacts/data_ingestion/Chicken-fecal-images
+      - artifacts/prepare_base_model
+    params:
+      - IMAGE_SIZE
+      - EPOCHS
+      - BATCH_SIZE
+      - AUGMENTATION
+    outs:
+      - artifacts/training/model.h5
+
+
+  
+
+  evaluation:
+    cmd: python src/cnnClassifier/pipeline/stage_04_evaluation.py
+    deps:
+      - src/cnnClassifier/pipeline/stage_04_evaluation.py
+      - config/config.yaml
+      - artifacts/data_ingestion/Chicken-fecal-images
+      - artifacts/training/model.h5
+    params:
+      - IMAGE_SIZE
+      - BATCH_SIZE
+    metrics: #this tells where to save the used metrics
+    - scores.json:
+        cache: false
